@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, windows-latest, macos-latest]
+        os: [windows-latest, macos-latest]
         python-version: [3.5,3.6,3.7,3.8]
     steps:
       - uses: actions/checkout@v2
@@ -34,14 +34,6 @@ jobs:
           cd $Env:GITHUB_WORKSPACE
           $command="python setup.py build_ext -I"+$startDir+"\boost_1_60_0\boost_1_60_0\ bdist_wheel"
           cmd.exe /c $command
-      - name: Linux Build
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install -y swig unzip
-          unzip -qq boost_1_60_0.zip
-          startDir=$(pwd)
-          
-          python setup.py build_ext -I$startDir/boost_1_60_0/ bdist_wheel
       - name: macOS Build
         if: runner.os == 'macOS'
         run: |
@@ -54,6 +46,17 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           path: ./dist/*.whl
+  build_manylinux:
+    name: Build manylinux wheels
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: RalfG/python-wheels-manylinux-build@v0.3.4-manylinux2014_x86_64
+        with:
+          python-versions: 'cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39'
+          system-packages: 'swig3 curl unzip'
+          pre-build-command: 'sh download_boost.sh'
+          pip-wheel-args: '-w ./dist --global-option build_ext --global-option -I./boost_1_60_0/'
   build_sdist:
     name: Build source distribution
     runs-on: ubuntu-latest
@@ -72,8 +75,9 @@ jobs:
         with:
           path: dist/*.tar.gz
 
+
 #   upload_pypi:
-#     needs: [build_wheels, build_sdist]
+#     needs: [build_wheels, build_manylinux, build_sdist]
 #     runs-on: ubuntu-latest
 #     # upload to PyPI on every tag starting with 'v'
 #     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
