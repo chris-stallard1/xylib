@@ -32,6 +32,8 @@ Supported formats:
    *(only 1-D data is supported)*
 - χPLOT CHI_
 - Ron Unwin's Spectra XPS format (VGX-900 compatible)
+- Freiberg Instruments XSYG (from lexsyg)
+- Bruker SPC/PAR
 
 .. _CHI: http://www.esrf.eu/computing/scientific/FIT2D/FIT2D_REF/node115.html#SECTION0001851500000000000000
 
@@ -69,6 +71,8 @@ xylib is used by:
 
 -  `fityk <http://fityk.nieto.pl>`_
 -  `qpx-gamma <https://github.com/usnistgov/qpx-gamma>`_
+-  `GammaSpy <https://github.com/wgurecky/GammaSpy>`_
+-  `gamma <https://github.com/crp2a/gamma>`_ through `rxylib <https://github.com/R-Lum/rxylib>`_
 -  ...
 
 xyconv
@@ -111,19 +115,19 @@ __ https://github.com/wojdyr/xylib/releases
 **Source**:
 
 * `tarball`_
-* GitHub repository_ |travis-status|_ |appveyor-status|_
+* GitHub repository_ |ci-status|_ |appveyor-status|_
 
-.. _`tarball`: https://github.com/wojdyr/xylib/releases/download/v1.5/xylib-1.5.tar.bz2
+.. _`tarball`: https://github.com/wojdyr/xylib/releases/download/v1.6/xylib-1.6.tar.bz2
 .. _repository: https://github.com/wojdyr/xylib
-.. _travis-status: https://travis-ci.org/wojdyr/xylib/
-.. |travis-status| image:: https://api.travis-ci.org/wojdyr/xylib.png
+.. _ci-status: https://github.com/wojdyr/xylib/actions
+.. |ci-status| image:: https://github.com/wojdyr/xylib/workflows/CI/badge.svg
 .. _appveyor-status: https://ci.appveyor.com/project/wojdyr/xylib
 .. |appveyor-status| image:: https://ci.appveyor.com/api/projects/status/9gotaqqhl8j9ovge?svg=true
 
 **To compile** the source code you need:
 
 * C++ compiler (all popular ones are tested: GCC, Clang, MSVC, icc)
-* Boost_ libraries (only headers).
+* Boost_ libraries >= 1.46.1 (only headers).
 * optionally, zlib and bzlib libraries (for reading compressed files)
 * optionally, wxWidgets 3.0 (for xyconvert - GUI converter)
 
@@ -175,16 +179,22 @@ CREDITS
    Canberra (Genie) CNF files.
 -  Matthias Richter added Ron Unwin's Spectra XPS format
    and SpecsLab2 xy format.
+-  Johannes Friedrich added xsyg (lexsyg) format.
+-  Sebastian Kreutzer added Bruker SPC binary format.
 
 .. _FitzPeaks: http://www.jimfitz.demon.co.uk/fitzpeak.htm
 
 HISTORY
 =======
 
-* 1.6 (unreleased)
+* 1.6 (2020-09-08)
+
+  - added XSYG format from Freiberg Instruments' lexsyg (Johannes Friedrich)
+  - added Bruker SPC binary format (Sebastian Kreutzer)
   - added PANalytical XRDML
 
 * 1.5 (2016-12-17)
+
   - improved CNF reading (thanks to Jim and Miha)
   - changes to reading SpecsLab2 xy
   - support text files with lines terminated by CR only

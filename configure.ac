@@ -24,6 +24,8 @@ AC_PROG_CXX
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 LT_INIT([disable-static win32-dll])
 
+AM_MAINTAINER_MODE dnl disable (by default) maintainer mode
+
 # Checks for libraries.
 XYLIB_ADDLIB=
 if test "x$with_zlib" != xno; then
@@ -68,12 +70,12 @@ AC_CHECK_HEADER([climits], [],
                 [AC_MSG_ERROR([Could not find necessary C++ libs headers])])
 AC_CHECK_HEADER([boost/cstdint.hpp], [],
                 [AC_MSG_ERROR([Could not find necessary Boost headers])])
-AC_CHECK_HEADER([boost/detail/endian.hpp], [],
-                [AC_MSG_ERROR([Could not find necessary Boost headers])])
 AC_CHECK_HEADER([boost/spirit/version.hpp], [],
                 [AC_MSG_ERROR([Boost::Spirit headers were not found.])])
 AC_CHECK_HEADER([boost/tokenizer.hpp], [],
                 [AC_MSG_ERROR([Boost Tokenizer header not found.])])
+AC_CHECK_HEADER([boost/property_tree/ptree.hpp], [],
+                [AC_MSG_ERROR([Boost PropertyTree header not found.])])
 AC_CHECK_HEADER([sys/types.h], [],
                 [AC_MSG_ERROR([Header sys/types.h not found.
                  Please inform xylib maintainer about this problem,
