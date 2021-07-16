@@ -57,6 +57,9 @@ jobs:
           system-packages: 'swig3 curl unzip'
           pre-build-command: 'sh download_boost.sh'
           pip-wheel-args: '-w ./dist --global-option build_ext --global-option -I./boost_1_60_0/'
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ./dist/*.whl
   build_sdist:
     name: Build source distribution
     runs-on: ubuntu-latest
